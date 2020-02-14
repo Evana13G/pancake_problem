@@ -1,0 +1,4 @@
+To run, navigate to the topmost directory level (the level containing driver.py), and type:
+
+python ./driver.py
+
