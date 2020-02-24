@@ -10,25 +10,42 @@ class Search:
         self.b_cost_history = 0
         self.frontier.put((0, _init_state))
         self.mode = _mode
+        self.frontier_stack = []
 
     def execute(self):
         # self.print_curr_stack()
-        while(1):
+
             print("trial")
             self.print_curr_stack()
             # self.safeprint_frontier()
             if self.frontier.empty():
                 return 'FAILED'
             self.curr_state = self.frontier.get()[1]
-            latest_b_cost = self.get_backward_cost(self.curr_state)
-            self.b_cost_history = self.b_cost_history + latest_b_cost
-            if self.curr_state == self.goal_state:
-                return 'SUCCEEDED'
-            self.successor_function()
+            curr_cost, curr_leaf = self.successor_function()
+            self.curr_state = curr_leaf #chose the smallest cost node
+            #print( self.curr_state )
+            while(1):
+                print("trial")
+                self.print_curr_stack()
+                # self.safeprint_frontier()
+                if self.frontier.empty():
+                    return 'FAILED'
+                self.curr_state = self.frontier.get()
+                curr_cost, curr_leaf = self.successor_function()
+                self.curr_state = curr_leaf  # chose the smallest cost node
+                #print(self.curr_state)
+
+
+
+
+
+            #self.successor_function()
 
 
     def successor_function(self):
         state = copy.deepcopy(self.curr_state)
+        small_state = []
+        count = 100
         for i in range(len(self.curr_state) - 1): # n-1 possible flips
             new_stack = self.curr_state[:i]
             flip_stack = self.curr_state[i:]
@@ -36,8 +53,20 @@ class Search:
             new_stack.extend(flip_stack)
             f_cost = self.get_forward_cost(new_stack)
             b_cost = self.get_backward_cost(new_stack)
+            #print(new_stack)
             total_cost = f_cost + b_cost
+            if total_cost <= count:
+                count = total_cost
+                small_state = new_stack
+            if new_stack == self.goal_state:
+                self.curr_state = new_stack
+                self.print_curr_stack()
+                print( 'SUCCEEDED')
+                exit()
+            self.frontier.put(new_stack)
             self.frontier_check((total_cost, new_stack))
+        #self.frontier.get()
+        return count, small_state
 
 
     def get_forward_cost(self, state):
