@@ -1,4 +1,45 @@
+ASSIGNMENT #2: 
+1.Define the problem as a searching problem
+	a. initial state: The problem starts with a random combination of pancakes 0 through 9, inputted by the user in the driver.py file. An example is [0,3,2,4,7,5,8,9,1,6]
+	b. possible actions available: For a stack of size n, there are n - 1 possible actions, or 'flips.' The flips can happen at any point in the stack, except for just the top pancake (because it would keep it in the same state). For example, for the initial state described above, there could be a flip at position 0, flipping the entire stack, yielding [6,1,9,8,5,7,4,2,3,0]. This is possible for position 0 to 8, and therefore the available actions are:
+		flip at 0
+		flip at 1
+		flip at 2
+		flip at 3
+		flip at 4
+		flip at 5
+		flip at 6
+		flip at 7 
+		flip at 8
+	c. successor function (transition model): For the actions listed above, we have the following successor states from our initial state:
+		flip at 0: [6,1,9,8,5,7,4,2,3,0]
+		flip at 1: [0,6,1,9,8,5,7,4,2,3]
+		flip at 2: [0,3,6,1,9,8,5,7,4,2]
+		flip at 3: [0,3,2,6,1,9,8,5,7,4]
+		flip at 4: [0,3,2,4,6,1,9,8,5,7]
+		flip at 5: [0,3,2,4,7,6,1,9,8,5]
+		flip at 6: [0,3,2,4,7,5,6,1,9,8]
+		flip at 7: [0,3,2,4,7,5,8,6,1,9]
+		flip at 8: [0,3,2,4,7,5,8,9,6,1]
+	d. goal test: checks to see if the state is []
+	e. cost function:
+
+2.Define a possible cost function (backward cost)
+3.Define a possible heuristic function(forward cost)
+4.Implement an A* algorithmin Python
+
+
 To run, navigate to the topmost directory level (the level containing driver.py), and type:
 
 python ./driver.py
 
+All configurations can be set in the driver.py file, under CONFIGS:
+
+		In driver.py:
+
+		######### START: CONFIGS
+		init_state = [0,1,2,3,7,4,5,6]     # SET INITIAL STACK ON PANCAKES
+		mode = 'A*'						   # SET MODE (either 'A*' or 'UCS', defaults to uniformed)	
+		######### END: CONFIGS
+
+Note that this implementation starts with pancake 0 instead of 1 

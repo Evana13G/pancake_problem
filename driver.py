@@ -1,10 +1,21 @@
 #!/usr/bin/env python
 
+import copy
+import sys
 from search import Search
 
+######### START: CONFIGS
+init_state = [2, 4, 5, 1, 3]     # SET INITIAL STACK ON PANCAKES
+mode = 'A*'						       # SET MODE (either 'A*' or 'UCS', defaults to uniformed)	
+######### END: CONFIGS
 
-init_state = [0,1,2,3,4,5,6,9,8,7]
-S = Search(init_state)
-print(S.execute())
+
+goal_state = copy.deepcopy(init_state)
+goal_state.sort()
+goal_state.reverse()
+
+S = Search(init_state, goal_state, mode)
+
+print("Outcome: " + str(S.execute()))
 
 
